@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<h2>Create</h2>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="formEmployee">
+            <input type="hidden" name="employeeId" id="employeeId" />
+            <div class="form-group">
+                <label class="control-label">FullName</label>
+                <input id="fullName" name="fullName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Address</label>
+                <input id="address" name="address" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="button" id="Create" value="Create" class="btn btn-success" onclick="CreateData()" />
+                <input type="button" id="Update" value="Update" class="btn btn-info hidden" onclick="UpdateData()" />
+            </div>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+@section scripts{
+    <script src="~/Views/Employee/Index.js"></script>
+}
