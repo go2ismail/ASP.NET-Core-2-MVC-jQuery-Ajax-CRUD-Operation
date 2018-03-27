@@ -9,9 +9,13 @@
 
 <h4>Employee</h4>
 <hr />
+
+
+
 <div class="row">
     <div class="col-md-4">
         <form id="formEmployee">
+            <span>@Html.AntiForgeryToken()</span>
             <input type="hidden" name="employeeId" id="employeeId" />
             <div class="form-group">
                 <label class="control-label">FullName</label>

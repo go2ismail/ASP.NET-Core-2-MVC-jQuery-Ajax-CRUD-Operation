@@ -66,6 +66,7 @@ namespace src.Controllers.api
 
         // POST: api/Employee
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostEmployee(Employee employee)
         {
            

@@ -5,7 +5,6 @@ GenerateGridList();
 
 function CreateData() {
     var formEmployee = $('#formEmployee').serialize();
-    console.log(formEmployee);
     $.ajax({
         type: "POST",
         url: "/API/Employee/PostEmployee",
