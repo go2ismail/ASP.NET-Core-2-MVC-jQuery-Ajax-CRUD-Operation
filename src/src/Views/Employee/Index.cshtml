@@ -10,28 +10,48 @@
 <h4>Employee</h4>
 <hr />
 
-
-
-<div class="row">
-    <div class="col-md-4">
-        <form id="formEmployee">
-            <span>@Html.AntiForgeryToken()</span>
-            <input type="hidden" name="employeeId" id="employeeId" />
-            <div class="form-group">
-                <label class="control-label">FullName</label>
-                <input id="fullName" name="fullName" class="form-control" />
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalForm">
+    Add
+</button>
+<div class="modal inmodal" id="ModalForm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-laptop modal-icon"></i>
+                <h4 class="modal-title">Modal Form</h4>
+                <small class="font-bold">Create and Edit</small>
             </div>
-            <div class="form-group">
-                <label class="control-label">Address</label>
-                <input id="address" name="address" class="form-control" />
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="formEmployee">
+                            <span>@Html.AntiForgeryToken()</span>
+                            <input type="hidden" name="employeeId" id="employeeId" />
+                            <div class="form-group">
+                                <label class="control-label">FullName</label>
+                                <input id="fullName" name="fullName" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Address</label>
+                                <input id="address" name="address" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                 <input type="button" id="Create" value="Create" class="btn btn-success" onclick="CreateData()" />
                 <input type="button" id="Update" value="Update" class="btn btn-info hidden" onclick="UpdateData()" />
             </div>
-        </form>
+        </div>
     </div>
 </div>
+
 <table class="table">
     <thead>
         <tr>

@@ -11,12 +11,14 @@ function CreateData() {
         data: formEmployee,
         success: function () {
 
-            Message("success", "Data successfuly saved.");
+            $('#ModalForm').modal('toggle');
+
+            Message("Data successfuly saved.");
 
             GenerateGridList();
         },
         error: function () {
-            Message("danger", "Data fail to saved.");
+            Message("Data fail to saved.");
         }
     });
 }
@@ -29,7 +31,9 @@ function EditData(employeeId) {
             url: "/API/Employee/GetEmployeeByID",
             data: { id: employeeId },
             success: function (result) {
-                console.log(result);
+
+
+
                 $('#employeeId').val(result.employeeId);
                 $('#fullName').val(result.fullName);
                 $('#address').val(result.address);
@@ -45,30 +49,39 @@ function EditData(employeeId) {
 function UpdateData() {
 
     var formEmployee = $('#formEmployee').serialize();
+
     $.ajax({
         type: "PUT",
         url: "/API/Employee/PutEmployee",
         data: formEmployee,
         success: function () {
 
+            $('#ModalForm').modal('toggle');
+
             $('#Create').removeClass('hidden');
             $('#Update').addClass('hidden');
 
-            Message('success', 'Update success!');
+            Message('Update success!');
 
             GenerateGridList();
         },
         error: function () {
-            Message('danger', 'Update failed!');
+            Message('Update failed!');
         }
     });
 }
 
 function DeleteData(employeeId) {
 
-    var confirmation = confirm('Are you sure you want to delete the data?');
-    if (confirmation) {
-
+    swal({
+        title: "Are you sure?",
+        text: "You will not be able to undo the process!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }, function () {
         if (employeeId != null) {
             $.ajax({
                 type: "DELETE",
@@ -76,15 +89,16 @@ function DeleteData(employeeId) {
                 data: { id: employeeId },
                 success: function () {
                     GenerateGridList();
-                    Message('success', 'Data deleted succesufully.');
+                    swal("Deleted!", "Your file has been deleted.", "success");
                 },
                 error: function () {
-                    Message('danger', 'Delete failed!');
+                    Message('Delete failed!');
                 }
             });
         }
 
-    }
+    });
+
 }
 
 function GenerateGridList() {
@@ -105,7 +119,7 @@ function GenerateGridList() {
                     var tr = "<tr>";
                     tr += "<td>" + result[i].fullName;
                     tr += "<td>" + result[i].address;
-                    tr += "<td>" + "<button class='btn btn-info' onclick=EditData(" + result[i].employeeId + ")>" + "Edit";
+                    tr += "<td>" + "<button class='btn btn-info' data-toggle='modal' data-target='#ModalForm' onclick=EditData(" + result[i].employeeId + ")>" + "Edit";
                     tr += "<td>" + "<button class='btn btn-danger' onclick=DeleteData(" + result[i].employeeId + ")>" + "Delete";
                     tbody.append(tr);
                 });
@@ -121,10 +135,6 @@ function ResetForm() {
     });
 }
 
-function Message(kelas, text) {
-    $("#message").remove();
-
-    setTimeout(function () {
-        $('#formEmployee').append("<div class='alert alert-" + kelas + "' id=info role=alert>" + text + "</div>");
-    }, 10);
+function Message(text) {
+    toastr.success(text)
 }
