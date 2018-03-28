@@ -119,7 +119,7 @@ function GenerateGridList() {
                     var tr = "<tr>";
                     tr += "<td>" + result[i].fullName;
                     tr += "<td>" + result[i].address;
-                    tr += "<td>" + "<button class='btn btn-info' data-toggle='modal' data-target='#ModalForm' onclick=EditData(" + result[i].employeeId + ")>" + "Edit";
+                    tr += "<td>" + "<button class='btn btn-info' data-backdrop='static' data-keyboard='false' data-toggle='modal' data-target='#ModalForm' onclick=EditData(" + result[i].employeeId + ")>" + "Edit";
                     tr += "<td>" + "<button class='btn btn-danger' onclick=DeleteData(" + result[i].employeeId + ")>" + "Delete";
                     tbody.append(tr);
                 });
