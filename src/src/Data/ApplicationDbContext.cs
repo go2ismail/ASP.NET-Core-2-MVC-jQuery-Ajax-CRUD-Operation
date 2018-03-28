@@ -24,5 +24,9 @@ namespace src.Data
         }
 
         public DbSet<src.Models.Employee> Employee { get; set; }
+
+        public DbSet<src.Models.Department> Department { get; set; }
+
+        public DbSet<src.Models.DepartmentEmployee> DepartmentEmployee { get; set; }
     }
 }

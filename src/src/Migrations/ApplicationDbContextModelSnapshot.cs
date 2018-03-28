@@ -179,6 +179,43 @@ namespace src.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("src.Models.Department", b =>
+                {
+                    b.Property<int>("departmentId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("departmentId");
+
+                    b.ToTable("Department");
+                });
+
+            modelBuilder.Entity("src.Models.DepartmentEmployee", b =>
+                {
+                    b.Property<int>("departmentEmployeeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("departmentId");
+
+                    b.Property<string>("description");
+
+                    b.Property<int>("employeeId");
+
+                    b.HasKey("departmentEmployeeId");
+
+                    b.HasIndex("departmentId");
+
+                    b.HasIndex("employeeId");
+
+                    b.ToTable("DepartmentEmployee");
+                });
+
             modelBuilder.Entity("src.Models.Employee", b =>
                 {
                     b.Property<int>("employeeId")
@@ -238,6 +275,19 @@ namespace src.Migrations
                     b.HasOne("src.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("src.Models.DepartmentEmployee", b =>
+                {
+                    b.HasOne("src.Models.Department", "department")
+                        .WithMany("departmentEmployee")
+                        .HasForeignKey("departmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("src.Models.Employee", "employee")
+                        .WithMany()
+                        .HasForeignKey("employeeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

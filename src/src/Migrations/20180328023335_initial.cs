@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace src.Migrations
 {
-    public partial class awal : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,20 @@ namespace src.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Department",
+                columns: table => new
+                {
+                    departmentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    description = table.Column<string>(maxLength: 200, nullable: true),
+                    name = table.Column<string>(maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Department", x => x.departmentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,6 +182,33 @@ namespace src.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DepartmentEmployee",
+                columns: table => new
+                {
+                    departmentEmployeeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    departmentId = table.Column<int>(nullable: false),
+                    description = table.Column<string>(nullable: true),
+                    employeeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepartmentEmployee", x => x.departmentEmployeeId);
+                    table.ForeignKey(
+                        name: "FK_DepartmentEmployee_Department_departmentId",
+                        column: x => x.departmentId,
+                        principalTable: "Department",
+                        principalColumn: "departmentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DepartmentEmployee_Employee_employeeId",
+                        column: x => x.employeeId,
+                        principalTable: "Employee",
+                        principalColumn: "employeeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -206,6 +247,16 @@ namespace src.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DepartmentEmployee_departmentId",
+                table: "DepartmentEmployee",
+                column: "departmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DepartmentEmployee_employeeId",
+                table: "DepartmentEmployee",
+                column: "employeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -226,13 +277,19 @@ namespace src.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "DepartmentEmployee");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Department");
+
+            migrationBuilder.DropTable(
+                name: "Employee");
         }
     }
 }
