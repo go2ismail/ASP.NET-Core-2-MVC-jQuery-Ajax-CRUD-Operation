@@ -2,26 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using src.Data;
 using src.Models;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace src.Controllers
 {
+    //[Authorize]
+    //[Route("[controller]/[action]")]
     public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        //jwt
+        private readonly ClaimsPrincipal _caller;
 
-        public EmployeeController(ApplicationDbContext context)
+        public EmployeeController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            //jwt
+            _caller = httpContextAccessor.HttpContext.User;
         }
 
         // GET: Employee
         public async Task<IActionResult> Index()
         {
+            // retrieve the user info
+            //HttpContext.User
+            var userId = _caller.Claims.Single(c => c.Type == "id");
+
             return View(await _context.Employee.ToListAsync());
         }
 

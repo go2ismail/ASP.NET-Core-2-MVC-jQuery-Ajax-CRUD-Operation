@@ -1,4 +1,6 @@
 ﻿
+var jwt = @ViewData["jwt"];
+console.log(jwt);
 
 GenerateGridList();
 
@@ -9,6 +11,9 @@ function CreateData() {
         type: "POST",
         url: "/API/Employee/PostEmployee",
         data: formEmployee,
+        beforeSend: function (xhr) {   
+            xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);
+        },
         success: function () {
 
             $('#ModalForm').modal('toggle');

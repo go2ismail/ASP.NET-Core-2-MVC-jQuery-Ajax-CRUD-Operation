@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using src.Models;
 
 namespace src.Controllers.api
 {
+    [Authorize(Policy = "ApiUser")]
     [Produces("application/json")]
     [Route("api/[controller]/[action]")]
     public class EmployeeController : Controller
@@ -66,7 +68,7 @@ namespace src.Controllers.api
 
         // POST: api/Employee
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> PostEmployee(Employee employee)
         {
            
