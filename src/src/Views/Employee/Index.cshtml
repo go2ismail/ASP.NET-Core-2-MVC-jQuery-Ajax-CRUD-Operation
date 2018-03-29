@@ -9,7 +9,7 @@
 
 <h4>Employee</h4>
 <hr />
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalForm">
+<button type="button" id="Add" class="btn btn-primary" onclick="AddData()">
     Add
 </button>
 <div class="modal inmodal" id="ModalForm" tabindex="-1" role="dialog" aria-hidden="true">
@@ -65,6 +65,12 @@
     </thead>
     <tbody id="tbody"></tbody>
 </table>
+
+
 @section scripts{
-    <script src="~/Views/Employee/Index.js"></script>
+
+   @Html.Partial("~/Views/Employee/IndexJS.cshtml")
+
+   @*<script src="~/Views/Employee/Index.js"></script>*@
+
 }

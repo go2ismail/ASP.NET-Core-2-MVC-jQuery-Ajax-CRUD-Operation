@@ -71,10 +71,14 @@ namespace src.Controllers.api
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> PostEmployee(Employee employee)
         {
-           
-            _context.Employee.Add(employee);
+            if (employee.employeeId == 0)
+            {
+                _context.Employee.Add(employee);
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+
+           
 
             return StatusCode(200, employee);
         }
