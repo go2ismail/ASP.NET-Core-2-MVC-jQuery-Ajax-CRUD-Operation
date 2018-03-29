@@ -11,8 +11,8 @@ using System;
 namespace src.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180328023335_initial")]
-    partial class initial
+    [Migration("20180329043338_awal")]
+    partial class awal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,6 +166,8 @@ namespace src.Migrations
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<string>("accessToken");
 
                     b.HasKey("Id");
 

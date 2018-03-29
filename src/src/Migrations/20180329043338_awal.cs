@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace src.Migrations
 {
-    public partial class initial : Migration
+    public partial class awal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,8 @@ namespace src.Migrations
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    accessToken = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

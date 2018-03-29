@@ -1,19 +1,28 @@
 ﻿
-var jwt = @ViewData["jwt"];
-console.log(jwt);
+var jwt = "";
+
+GetToken();
 
 GenerateGridList();
 
+
+function GetToken() {
+    $.ajax({
+        type: "GET",
+        url: "/API/Token/RequestToken",
+        success: function (result) {
+            jwt = result;
+        }
+    });
+}
 
 function CreateData() {
     var formEmployee = $('#formEmployee').serialize();
     $.ajax({
         type: "POST",
         url: "/API/Employee/PostEmployee",
+        headers: { 'Authorization': 'Bearer ' + jwt },
         data: formEmployee,
-        beforeSend: function (xhr) {   
-            xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);
-        },
         success: function () {
 
             $('#ModalForm').modal('toggle');
@@ -34,6 +43,7 @@ function EditData(employeeId) {
         $.ajax({
             type: "GET",
             url: "/API/Employee/GetEmployeeByID",
+            headers: { 'Authorization': 'Bearer ' + jwt },
             data: { id: employeeId },
             success: function (result) {
 
@@ -58,6 +68,7 @@ function UpdateData() {
     $.ajax({
         type: "PUT",
         url: "/API/Employee/PutEmployee",
+        headers: { 'Authorization': 'Bearer ' + jwt },
         data: formEmployee,
         success: function () {
 
@@ -91,6 +102,7 @@ function DeleteData(employeeId) {
             $.ajax({
                 type: "DELETE",
                 url: "/API/Employee/DeleteEmployee",
+                headers: { 'Authorization': 'Bearer ' + jwt },
                 data: { id: employeeId },
                 success: function () {
                     GenerateGridList();
@@ -113,6 +125,7 @@ function GenerateGridList() {
 
         type: "GET",
         url: "/API/Employee/GetEmployee",
+        headers: { 'Authorization': 'Bearer ' + jwt },
         success: function (result) {
             if (result.length == 0) {
                 $('table').addClass('hidden');

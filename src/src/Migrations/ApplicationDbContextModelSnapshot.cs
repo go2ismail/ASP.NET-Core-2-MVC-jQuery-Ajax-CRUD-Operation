@@ -166,6 +166,8 @@ namespace src.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
+                    b.Property<string>("accessToken");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")

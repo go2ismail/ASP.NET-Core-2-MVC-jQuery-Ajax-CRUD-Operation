@@ -11,31 +11,32 @@ using src.Models;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace src.Controllers
 {
-    //[Authorize]
-    //[Route("[controller]/[action]")]
+    [Authorize]
+    [Route("[controller]/[action]")]
     public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        //jwt
-        private readonly ClaimsPrincipal _caller;
 
-        public EmployeeController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public EmployeeController(ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
-            //jwt
-            _caller = httpContextAccessor.HttpContext.User;
+            _userManager = userManager;
+          
+
         }
+         
+    
 
         // GET: Employee
         public async Task<IActionResult> Index()
         {
-            // retrieve the user info
-            //HttpContext.User
-            var userId = _caller.Claims.Single(c => c.Type == "id");
-
             return View(await _context.Employee.ToListAsync());
         }
 
@@ -49,6 +50,7 @@ namespace src.Controllers
 
             var employee = await _context.Employee
                 .SingleOrDefaultAsync(m => m.employeeId == id);
+
             if (employee == null)
             {
                 return NotFound();

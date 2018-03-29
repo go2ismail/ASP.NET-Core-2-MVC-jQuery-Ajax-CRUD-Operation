@@ -11,8 +11,8 @@ using src.Models;
 
 namespace src.Controllers
 {
-    //[Authorize]
-    //[Route("[controller]/[action]")]
+    [Authorize]
+    [Route("[controller]/[action]")]
     public class DepartmentEmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;

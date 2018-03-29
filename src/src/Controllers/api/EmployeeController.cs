@@ -11,7 +11,7 @@ using src.Models;
 
 namespace src.Controllers.api
 {
-    [Authorize(Policy = "ApiUser")]
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]/[action]")]
     public class EmployeeController : Controller

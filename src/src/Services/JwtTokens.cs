@@ -9,7 +9,7 @@ namespace src.Services
     {
         public static async Task<string> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
         {
-            var response = new
+            var response = new Jwt
             {
                 id = identity.Claims.Single(c => c.Type == "id").Value,
                 auth_token = await jwtFactory.GenerateEncodedToken(userName, identity),

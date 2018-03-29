@@ -49,6 +49,7 @@ namespace src.Controllers
         [TempData]
         public string ErrorMessage { get; set; }
 
+
         //jwt
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
         {
@@ -105,7 +106,12 @@ namespace src.Controllers
 
                     var jwt = await JwtTokens.GenerateJwt(identity, _jwtFactory, model.Email, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
                     
-                    return RedirectToAction(returnUrl);
+                    ApplicationUser usr = await _userManager.FindByNameAsync(model.Email);
+                    var jwtObj = JsonConvert.DeserializeObject<Jwt>(jwt);
+                    usr.accessToken = jwtObj.auth_token;
+                    await _userManager.UpdateAsync(usr);
+
+                    return RedirectToLocal(returnUrl);
 
                 }
                 if (result.RequiresTwoFactor)

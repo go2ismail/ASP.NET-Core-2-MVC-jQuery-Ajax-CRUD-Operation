@@ -70,6 +70,13 @@ namespace src
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiUser", policy => policy.RequireClaim(JwtConstants.Strings.JwtClaimIdentifiers.Rol, JwtConstants.Strings.JwtClaims.ApiAccess));
+            });
+
+            /*
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -81,10 +88,8 @@ namespace src
                 configureOptions.TokenValidationParameters = tokenValidationParameters;
                 configureOptions.SaveToken = true;
             });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(JwtConstants.Strings.JwtClaimIdentifiers.Rol, JwtConstants.Strings.JwtClaims.ApiAccess));
-            });
+           
+
             var builder = services.AddIdentityCore<ApplicationUser>(o =>
             {
                 o.Password.RequireDigit = false;
@@ -95,7 +100,8 @@ namespace src
             });
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
             builder.AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
+            */
+            
 
             services.AddMvc();
         }
@@ -113,6 +119,7 @@ namespace src
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
 
             app.UseStaticFiles();
 
